@@ -1,0 +1,23 @@
+{
+  "name": "bleno-peripheral",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amit-chahar/bleno-peripheral.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amit-chahar/bleno-peripheral/issues"
+  },
+  "homepage": "https://github.com/amit-chahar/bleno-peripheral#readme",
+  "dependencies": {
+    "bleno": "^0.4.0",
+    "fs": "0.0.2"
+  }
+}

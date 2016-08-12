@@ -8,6 +8,7 @@ var fs = require('fs');
 var name = 'commService';
 var commServiceUuid = '12ab';
 var commCharacteristicUuid = '34cd';
+var commCharacteristicUuid2 = '56ef';
 var logfile_name = __dirname + '/firmware_file';
 
 function delete_file(filename) {
@@ -27,6 +28,7 @@ var first_write = true;
 function write_to_file(message) {
     var buf = new Buffer(message);
     if (first_write) {
+	//delete_file(logfile_name);
         fs.writeFileSync(logfile_name, buf.toString());
         first_write = false;
     }
@@ -59,6 +61,32 @@ var service1 = new bleno.PrimaryService({
                 //this.value = data;
                 //console.log('Write request: value = ' + this.value.toString("utf-8"));
                 write_to_file(data.toString('utf-8'));
+                callback(this.RESULT_SUCCESS);
+            }
+
+        }),
+	new bleno.Characteristic({
+            value: null,
+            uuid: commCharacteristicUuid2,
+            properties: ['writeWithoutResponse', 'notify', 'read', 'write'],
+            secure: ['read', 'write', 'writeWithoutResponse'],
+
+            // Send a message back to the client with the characteristic's value
+            onReadRequest: function (offset, callback) {
+                console.log("Read request received");
+                callback(this.RESULT_SUCCESS, new Buffer(
+                    this.value ? this.value.toString("utf-8") : ""));
+            },
+
+            // Accept a new value for the characterstic's value
+            onWriteRequest: function (data, offset, withoutResponse, callback) {
+                //this.value = data;
+                //console.log('Write request: value = ' + this.value.toString("utf-8"));
+		data = new Buffer(data);
+		console.log("control command received : " + data.toString());
+                if(data.toString('utf-8') == '5'){
+			delete_file(logfile_name);
+		}
                 callback(this.RESULT_SUCCESS);
             }
 

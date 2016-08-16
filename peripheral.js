@@ -9,7 +9,7 @@ var name = 'commService';
 var commServiceUuid = '12ab';
 var commCharacteristicUuid = '34cd';
 var commCharacteristicUuid2 = '56ef';
-var FT_CONTROL_FVERSION_UUID = '78GH';
+var FT_CONTROL_FVERSION_UUID = '78ab';
 
 var logfile_name = __dirname + '/firmware_file';
 var fversion_file = __dirname + '/fversion';
@@ -33,8 +33,8 @@ function write_firmware_version(value){
 
 function read_existing_firmware_version(){
 	var version = fs.readFileSync(fversion_file);
-	console.log("current version of firmware : " + version.trim());
-	return version.trim();
+	console.log("current version of firmware : " + version);
+	return version;
 }
 
 var first_write = true;
@@ -87,7 +87,7 @@ var service1 = new bleno.PrimaryService({
             // Send a message back to the client with the characteristic's value
             onReadRequest: function (offset, callback) {
             	var version = read_existing_firmware_version();
-                console.log("Read request received");
+                console.log("Read request received : Firmware version");
                 callback(this.RESULT_SUCCESS, new Buffer(version));
             },
 

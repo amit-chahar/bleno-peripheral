@@ -112,8 +112,10 @@ var service1 = new bleno.PrimaryService({
 
             // Send a message back to the client with the characteristic's value
             onReadRequest: function (offset, callback) {
+		//var data_to_send = no_of_packets_recvd.toString('utf-8');
+		//console.log("no of packets received : " + data_to_send);
             	console.log("Read request received : FU PACKETS RECEIVED : " + no_of_packets_recvd);
-            	callback(this.RESULT_SUCCESS, new Buffer(no_of_packets_recvd));
+            	callback(this.RESULT_SUCCESS, new Buffer(no_of_packets_recvd.toString()));
             },
 
             // Accept a new value for the characterstic's value
